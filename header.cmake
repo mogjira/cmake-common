@@ -1,4 +1,3 @@
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/cmake-common)
 include(GNUInstallDirs)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 if (DEFINED ENV{NDEBUG})
