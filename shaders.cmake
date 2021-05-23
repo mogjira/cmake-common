@@ -24,7 +24,6 @@ macro(build_shaders)
 endmacro()
 
 macro(install_shaders)
-    message("Installing shaders")
     if (NOT DEFINED SHADER_INSTALL_PREFIX)
         set(SHADER_INSTALL_PREFIX ${CMAKE_INSTALL_DATADIR}/shaders)
     endif()
