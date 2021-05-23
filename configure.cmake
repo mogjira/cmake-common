@@ -1,4 +1,4 @@
-function(setup_config config_in_file)
+function(configure config_in_file)
     if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
         message(FATAL_ERROR "Must define CMAKE_INSTALL_LIBDIR or include GNUInstallDirs")
     endif()

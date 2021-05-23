@@ -2,13 +2,16 @@ function(author_library lib_name)
     set(options)
     set(oneValueArgs EXPORT_NAME)
     set(multiValueArgs SOURCES PUBLIC_HEADERS DEPENDENCIES PRIVATE_DEPS EXTRA_INC_DIRS)
-    cmake_parse_arguments(L "${options}" "${oneValueArgs}" "${multiValueArgs}")
+    cmake_parse_arguments(L "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    message("${multiValueArgs}")
+    message("${L_SOURCES}")
 
     add_library(${lib_name} SHARED ${L_SOURCES})
 
     set(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-    target_include_directories(${INTERFACE 
+    target_include_directories(${lib_name} INTERFACE 
         $<BUILD_INTERFACE:${CURDIR}>)
 
     if(L_EXTRA_INC_DIRS)
@@ -16,8 +19,6 @@ function(author_library lib_name)
             $<BUILD_INTERFACE:${L_EXTRA_INC_DIRS}>)
     endif()
 
-    target_link_libraries(${lib_name} PUBLIC ${PROJECT_NAME}::Config ${L_DEPENDENCIES})
-    if(
     target_link_libraries(${lib_name} PUBLIC ${PROJECT_NAME}::Config ${L_DEPENDENCIES})
 
     if(L_PUBLIC_HEADERS)
@@ -41,5 +42,4 @@ function(author_library lib_name)
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${lib_name})
-
 endfunction()

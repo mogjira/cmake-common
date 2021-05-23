@@ -1,5 +1,5 @@
 include(GNUInstallDirs)
-set(CMAKE_INSTALL_MESSAGE LAZY)
+#set(CMAKE_INSTALL_MESSAGE LAZY)
 if (DEFINED ENV{NDEBUG})
     set(CMAKE_BUILD_TYPE Release)
 else()
