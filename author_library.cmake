@@ -33,6 +33,7 @@ function(author_library lib_name)
 
     set_target_properties(${lib_name} PROPERTIES
           OUTPUT_NAME ${lib_name}
+          SOVERSION ${CMAKE_PROJECT_VERSION}
           RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
     add_library(${PROJECT_NAME}::${L_EXPORT_NAME} ALIAS ${lib_name})
