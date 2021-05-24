@@ -4,15 +4,10 @@ function(author_library lib_name)
     set(multiValueArgs SOURCES PUBLIC_HEADERS DEPENDENCIES PRIVATE_DEPS EXTRA_INC_DIRS)
     cmake_parse_arguments(L "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    message("${multiValueArgs}")
-    message("${L_SOURCES}")
-
     add_library(${lib_name} SHARED ${L_SOURCES})
 
-    set(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
-
-    target_include_directories(${lib_name} INTERFACE 
-        $<BUILD_INTERFACE:${CURDIR}>)
+    target_include_directories(${lib_name} PUBLIC 
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
     if(L_EXTRA_INC_DIRS)
         target_include_directories(${lib_name} PRIVATE 
