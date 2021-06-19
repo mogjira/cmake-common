@@ -1,4 +1,4 @@
-function(setup_config config_in_file)
+function(configure config_in_file)
     if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
         message(FATAL_ERROR "Must define CMAKE_INSTALL_LIBDIR or include GNUInstallDirs")
     endif()
@@ -29,7 +29,7 @@ function(setup_config config_in_file)
 
     write_basic_package_version_file("${PROJECT_NAME}ConfigVersion.cmake"
         VERSION ${PROJECT_VERSION}
-        COMPATIBILITY SameMajorVersion)
+        COMPATIBILITY SameMinorVersion)
 
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
                   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
