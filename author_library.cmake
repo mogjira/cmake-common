@@ -1,10 +1,13 @@
 function(author_library lib_name)
-    set(options)
-    set(oneValueArgs EXPORT_NAME)
+    set(oneValueArgs EXPORT_NAME TYPE)
     set(multiValueArgs SOURCES PUBLIC_HEADERS DEPS PRIVATE_DEPS EXTRA_INC_DIRS)
     cmake_parse_arguments(L "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    add_library(${lib_name} STATIC ${L_SOURCES})
+    if(NOT L_TYPE)
+        set(L_TYPE STATIC)
+    endif()
+
+    add_library(${lib_name} ${L_TYPE} ${L_SOURCES})
 
     target_include_directories(${lib_name} PUBLIC 
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
