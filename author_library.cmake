@@ -1,7 +1,8 @@
+# requires at least cmake version 3.12 to use object libraries as deps
 function(author_library lib_name)
     set(options)
     set(oneValueArgs EXPORT_NAME TYPE)
-    set(multiValueArgs SOURCES PUBLIC_HEADERS DEPS PRIVATE_DEPS OBJ_DEPS EXTRA_INC_DIRS)
+    set(multiValueArgs SOURCES PUBLIC_HEADERS DEPS PRIVATE_DEPS EXTRA_INC_DIRS)
     cmake_parse_arguments(L "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     if(NOT L_TYPE)
@@ -19,12 +20,6 @@ function(author_library lib_name)
     endif()
 
     target_link_libraries(${lib_name} PUBLIC ${PROJECT_NAME}::Config ${L_DEPS})
-
-    if (OBJ_DEPS)
-        message("obj deps: ${L_OBJ_DEPS}")
-        target_link_libraries(${lib_name} $<TARGET_OBJECTS:${L_OBJ_DEPS}>)
-    endif()
-
 
     if(L_PUBLIC_HEADERS)
         set_target_properties(${lib_name} PROPERTIES PUBLIC_HEADER "${L_PUBLIC_HEADERS}")
