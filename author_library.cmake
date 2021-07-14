@@ -11,6 +11,10 @@ function(author_library lib_name)
 
     add_library(${lib_name} ${L_TYPE} ${L_SOURCES})
 
+    if(${L_TYPE} STREQUAL "OBJECT")
+        set_property(TARGET ${lib_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+    endif()
+
     target_include_directories(${lib_name} PUBLIC 
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
