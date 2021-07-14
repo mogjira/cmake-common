@@ -4,7 +4,7 @@ function(author_library lib_name)
     set(multiValueArgs SOURCES PUBLIC_HEADERS DEPS PRIVATE_DEPS OBJ_DEPS EXTRA_INC_DIRS)
     cmake_parse_arguments(L "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    if(NOT options)
+    if(NOT TYPE)
         set(L_TYPE STATIC)
     endif()
 
