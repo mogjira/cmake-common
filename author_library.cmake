@@ -19,7 +19,7 @@ function(author_library lib_name)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
     if(L_EXTRA_INC_DIRS)
-        target_include_directories(${lib_name} PRIVATE 
+        target_include_directories(${lib_name} PUBLIC
             $<BUILD_INTERFACE:${L_EXTRA_INC_DIRS}>)
     endif()
 
