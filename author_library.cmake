@@ -40,8 +40,9 @@ function(author_library lib_name)
 
     add_library(${PROJECT_NAME}::${L_EXPORT_NAME} ALIAS ${lib_name})
 
+    target_link_libraries(${lib_name} PUBLIC ${PROJECT_NAME}::Config ${L_DEPS})
+
     if(L_TYPE STREQUAL "SHARED" OR L_TYPE STREQUAL "STATIC")
-        target_link_libraries(${lib_name} PUBLIC ${PROJECT_NAME}::Config ${L_DEPS})
         install(TARGETS ${lib_name} EXPORT ${PROJECT_NAME}Targets
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
