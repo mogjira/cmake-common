@@ -43,5 +43,5 @@ function(author_shaders target_name output_dir out_spvs)
         install(FILES ${SPVS}
             DESTINATION ${SHADER_INSTALL_PREFIX})
     endif()
-    set(out_spvs SPVS PARENT_SCOPE)
+    set(${out_spvs} ${SPVS} PARENT_SCOPE)
 endfunction()
