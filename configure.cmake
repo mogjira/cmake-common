@@ -12,15 +12,19 @@ function(configure config_in_file)
       $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
       $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${project_name}>)
 
+  if(NOT DEFINED NO_INSTALL)
     install(TARGETS ${PROJECT_NAME}Config EXPORT ${PROJECT_NAME}Targets)
+endif()
     add_library(${PROJECT_NAME}::Config ALIAS ${PROJECT_NAME}Config)
 
     include(CMakePackageConfigHelpers)
 
+    if(NOT DEFINED NO_INSTALL)
     install(EXPORT ${PROJECT_NAME}Targets
       DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
       FILE ${PROJECT_NAME}Targets.cmake
       NAMESPACE ${PROJECT_NAME}::)
+      endif()
 
     configure_package_config_file(
         ${config_in_file}
@@ -31,6 +35,7 @@ function(configure config_in_file)
         VERSION ${PROJECT_VERSION}
         COMPATIBILITY SameMinorVersion)
 
+    if(NOT DEFINED NO_INSTALL)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
                   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
       DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
@@ -40,4 +45,5 @@ function(configure config_in_file)
       FILE ${PROJECT_NAME}Targets.cmake
       NAMESPACE ${PROJECT_NAME}::
       EXPORT_LINK_INTERFACE_LIBRARIES)
+      endif()
 endfunction()
