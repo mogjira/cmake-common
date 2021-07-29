@@ -1,4 +1,4 @@
-function(author_shaders target_name output_dir)
+function(author_shaders target_name output_dir out_spvs)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs SOURCES)
@@ -43,4 +43,5 @@ function(author_shaders target_name output_dir)
         install(FILES ${SPVS}
             DESTINATION ${SHADER_INSTALL_PREFIX})
     endif()
+    set(out_spvs SPVS PARENT_SCOPE)
 endfunction()
