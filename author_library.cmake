@@ -42,11 +42,13 @@ function(author_library lib_name)
 
     target_link_libraries(${lib_name} PUBLIC ${PROJECT_NAME}::Config ${L_DEPS})
 
+    if(NOT DEFINED NO_INSTALL)
     if(L_TYPE STREQUAL "SHARED" OR L_TYPE STREQUAL "STATIC")
         install(TARGETS ${lib_name} EXPORT ${PROJECT_NAME}Targets
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${lib_name})
+    endif()
     endif()
 endfunction()
