@@ -6,12 +6,17 @@ function(author_shaders target_name output_dir out_spvs)
 
     if(NOT DEFINED GLC)
         set(GLC glslc)
+        message("Using system glslc")
     else() 
         message("Using user set glslc: ${GLC}")
     endif()
     set(GLCFLAGS "--target-env=vulkan1.2")
     set(DIR ${CMAKE_CURRENT_SOURCE_DIR})
-    set(BUILD_DIR "${PROJECT_BINARY_DIR}/shaders/${output_dir}")
+    if (DEFINED SHADER_BUILD_DIR)
+        set(BUILD_DIR "${SHADER_BUILD_DIR}/${output_dir}")
+    else()
+        set(BUILD_DIR "${PROJECT_BINARY_DIR}/shaders/${output_dir}")
+    endif()
     file(MAKE_DIRECTORY ${BUILD_DIR})
 
     foreach(SRC ${S_SOURCES})
@@ -19,7 +24,7 @@ function(author_shaders target_name output_dir out_spvs)
         set(SPV "${BUILD_DIR}/${FILE_NAME}.spv")
         set(CMD ${GLC} ${GLCFLAGS} ${DIR}/${SRC} -o ${SPV})
         add_custom_command(
-            OUTPUT ${SPV}
+            OUTPUT  ${SPV}
             COMMAND ${CMD}
             DEPENDS ${SRC})
         list(APPEND SPVS ${SPV})
@@ -27,21 +32,16 @@ function(author_shaders target_name output_dir out_spvs)
 
     add_custom_target(${target_name} ALL DEPENDS ${SPVS})
 
-    if (NOT DEFINED SHADER_INSTALL_PREFIX)
-        set(SHADER_INSTALL_DIR ${CMAKE_INSTALL_DATADIR}/shaders/${output_dir})
+    if (DEFINED SHADER_INSTALL_DIR)
+        string(APPEND SHADER_INSTALL_DIR "/${output_dir}")
     else()
-        set(SHADER_INSTALL_DIR ${SHADER_INSTALL_PREFIX}/${output_dir})
+        set(SHADER_INSTALL_DIR ${CMAKE_INSTALL_DATADIR}/shaders/${output_dir})
     endif()
     if (NOT DEFINED SPVS)
         message(FATAL_ERROR "SPVS not defined. Can call build_shaders() before to create them. Aborting shader installation.")
     endif()
-    if (DEFINED SHADER_INSTALL_DIR)
-        message("Installing shaders to ${SHADER_INSTALL_DIR}")
-        install(FILES ${SPVS}
-            DESTINATION ${SHADER_INSTALL_DIR})
-    else()
-        install(FILES ${SPVS}
-            DESTINATION ${SHADER_INSTALL_PREFIX})
-    endif()
+    message("Installing shaders to ${SHADER_INSTALL_DIR}")
+    install(FILES ${SPVS}
+        DESTINATION ${SHADER_INSTALL_DIR})
     set(${out_spvs} ${SPVS} PARENT_SCOPE)
 endfunction()
