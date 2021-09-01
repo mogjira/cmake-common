@@ -13,7 +13,7 @@ function(author_shaders target_name output_dir out_spvs)
     if (DEFINED SHADER_BUILD_DIR)
         set(BUILD_DIR "${SHADER_BUILD_DIR}/${output_dir}")
     else()
-        set(BUILD_DIR "${PROJECT_BINARY_DIR}/shaders/${output_dir}")
+        set(BUILD_DIR "${CMAKE_BINARY_DIR}/shaders/${output_dir}")
     endif()
     file(MAKE_DIRECTORY ${BUILD_DIR})
 
